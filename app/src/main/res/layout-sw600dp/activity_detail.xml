@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailActivity"
+    android:divider="?android:dividerHorizontal"
+    android:orientation="horizontal"
+    android:id="@+id/id_tablet_layout">
+    <FrameLayout
+        android:layout_width="@dimen/framewidth350"
+        android:layout_height="wrap_content"
+        android:id="@+id/id_frag_ingredients"
+        >
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="@dimen/zero"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:id="@+id/id_fragment_steps_detail">
+
+    </FrameLayout>
+</LinearLayout>

@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">MaBaker</string>
+    <string name="recipe_image">Recipe Image</string>
+    <string name="servings">Servings:</string>
+    <string name="ingredient_list">Ingredient List:</string>
+    <string name="add_widget">Add Widget</string>
+    <string name="select_recipe">Select Recipe</string>
+    <string name="selected_position">Selected Position</string>
+    <string name="appwidget_text">Recipe</string>
+    <string name="configure">Configure</string>
+    <string name="widget_removed">Widget Removed</string>
+    <string name="error">Error</string>
+    <string name="recipe">recipe</string>
+    <string name="isTablet">isTablet</string>
+    <string name="fragment_ingredient">IngredientFragment</string>
+    <string name="fragment_steps">StepsFragment</string>
+    <string name="downloadedList">downloadedList</string>
+    <string name="no_internet">No internet connection!</string>
+    <string name="loading_internet">Loading Data from Internet</string>
+    <style name="savedSteps">SavedSteps</style>
+    <string name="playWhenReady">playWhenReady</string>
+</resources>
