@@ -31,4 +31,5 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     <dimen name="marginStart">101dp</dimen>
     <dimen name="cardMinElevation">2dp</dimen>
     <dimen name="iconSize">30dp</dimen>
+    <dimen name="normalFont">12sp</dimen>
 </resources>

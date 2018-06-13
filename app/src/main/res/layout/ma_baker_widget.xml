@@ -5,6 +5,7 @@
     android:padding="@dimen/zero"
     android:orientation="vertical"
     android:layout_margin="@dimen/paddingMin">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,13 +16,17 @@
         android:textColor="@color/colorPrimary"
         android:layout_marginStart="@dimen/cardElevation"
         android:id="@+id/id_widget_title"/>
-    <TextView
-        android:id="@+id/id_widget_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/marginLeft"
-        android:layout_marginStart="@dimen/marginLeft"
-        android:padding="@dimen/paddingTop"
-        android:textColor="@color/colorAccent"
-        android:background="@drawable/color_border"/>
+
+            <TextView
+                android:id="@+id/id_widget_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/marginLeft"
+                android:layout_marginStart="@dimen/marginLeft"
+                android:padding="@dimen/paddingTop"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/normalFont"
+                android:fontFamily="serif"
+                android:background="@drawable/color_border"/>
+
 </LinearLayout>

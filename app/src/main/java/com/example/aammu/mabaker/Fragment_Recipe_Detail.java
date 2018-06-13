@@ -153,7 +153,7 @@ public class Fragment_Recipe_Detail extends Fragment {
         switch (item.getItemId()) {
             case android.R.id.home:
                 getFragmentManager().popBackStack();
-               getActivity().getActionBar().setDisplayHomeAsUpEnabled(false);
+                getActivity().getActionBar().setDisplayHomeAsUpEnabled(false);
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -2,6 +2,7 @@ package com.example.aammu.mabaker;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -31,13 +32,11 @@ import butterknife.ButterKnife;
 public class Fragment_Steps_Detail extends Fragment {
     private List<Steps> steps;
     private Adapter myAdapter;
-    Bundle bundle = new Bundle();
     @BindView(R.id.viewpager) ViewPager viewPager;
     @BindView(R.id.tabs)
     PagerSlidingTabStrip tabs;
     private int position =0 ;
     Fragment fragment;
-
     public Fragment_Steps_Detail() {
     }
 
