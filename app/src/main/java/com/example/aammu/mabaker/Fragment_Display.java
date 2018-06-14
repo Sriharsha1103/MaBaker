@@ -1,10 +1,16 @@
 package com.example.aammu.mabaker;
 
+import android.annotation.TargetApi;
+import android.app.PictureInPictureParams;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.util.Rational;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,7 +42,7 @@ import static android.view.View.GONE;
 
 public class Fragment_Display extends Fragment{
 
-
+    public static final String FRAG_PREF = "frag_pref";
     @BindView(R.id.id_exoPlayer_view)
     SimpleExoPlayerView exoPlayerView;
     @BindView(R.id.id_steps_detail_description)
@@ -46,6 +52,9 @@ public class Fragment_Display extends Fragment{
     private long position=0;
     private String videoURL =null;
     private boolean playWhenReady=true;
+    SharedPreferences sharedPreferences;
+
+
 
     public Fragment_Display() {
     }
@@ -88,10 +97,6 @@ public class Fragment_Display extends Fragment{
             videoURL = steps.getThumbNail_URL();
             setExoPlayer();
         }
-        if(exoPlayer!=null){
-            exoPlayer.setPlayWhenReady(playWhenReady);
-            exoPlayer.seekTo(position);
-        }
 
     }
 
@@ -99,8 +104,7 @@ public class Fragment_Display extends Fragment{
         if(videoURL!=null && exoPlayer==null) {
             BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
             Uri uri = Uri.parse(videoURL);
-            TrackSelector trackSelector = new DefaultTrackSelector(
-                    new AdaptiveTrackSelection.Factory(bandwidthMeter));
+            TrackSelector trackSelector = new DefaultTrackSelector(new AdaptiveTrackSelection.Factory(bandwidthMeter));
             LoadControl loadControl = new DefaultLoadControl();
             exoPlayer = ExoPlayerFactory.newSimpleInstance(getActivity(), trackSelector, loadControl);
             DefaultHttpDataSourceFactory defaultHttpDataSourceFactory = new DefaultHttpDataSourceFactory("exoplayer_video");
@@ -126,19 +130,16 @@ public class Fragment_Display extends Fragment{
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        releasePlayer();
-
-    }
-
-
-    @Override
     public void onPause() {
         super.onPause();
+        sharedPreferences = getActivity().getSharedPreferences(FRAG_PREF,0);
         if (exoPlayer != null) {
             position = exoPlayer.getCurrentPosition();
             playWhenReady = exoPlayer.getPlayWhenReady();
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putLong("currentPosition",position);
+            editor.putBoolean("playWhenReady",playWhenReady);
+            editor.apply();
         }
     }
 
@@ -148,14 +149,17 @@ public class Fragment_Display extends Fragment{
         releasePlayer();
     }
 
+
     @Override
-    public void onStart() {
-        super.onStart();
-        if (Util.SDK_INT > 23) {
-            startPlayer();
+    public void onResume() {
+        super.onResume();
+        SharedPreferences sharedPreferences1 = getActivity().getSharedPreferences(FRAG_PREF,0);
+        startPlayer();
+        if(exoPlayer!=null){
+            exoPlayer.seekTo(sharedPreferences1.getLong("currentPosition",0));
+            exoPlayer.setPlayWhenReady(sharedPreferences1.getBoolean("playWhenReady",false));
         }
     }
-
 
     private void releasePlayer() {
         if (exoPlayer != null) {
@@ -176,4 +180,25 @@ public class Fragment_Display extends Fragment{
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode) {
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode);
+        final PictureInPictureParams.Builder mPictureInPictureParamsBuilder;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            mPictureInPictureParamsBuilder = new PictureInPictureParams.Builder();
+
+            if (!isInPictureInPictureMode) {
+                if (exoPlayerView != null) {
+                    exoPlayerView.showController();
+
+                } else {
+                    exoPlayerView.hideController();
+                    Rational aspectRatio = new Rational(exoPlayerView.getWidth(), exoPlayerView.getHeight());
+                    mPictureInPictureParamsBuilder.setAspectRatio(aspectRatio).build();
+                    getActivity().enterPictureInPictureMode(mPictureInPictureParamsBuilder.build());
+                }
+            }
+        }
+
+    }
 }

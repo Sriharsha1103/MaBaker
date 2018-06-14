@@ -19,7 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DetailActivity" />
+        <activity android:name=".DetailActivity"
+            android:resizeableActivity="true"
+            android:supportsPictureInPicture="true"
+            />
 
         <receiver android:name=".widgets.MaBakerWidget">
             <intent-filter>

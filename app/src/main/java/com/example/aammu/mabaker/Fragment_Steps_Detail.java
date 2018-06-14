@@ -1,8 +1,6 @@
 package com.example.aammu.mabaker;
 
 import android.app.ActionBar;
-import android.app.FragmentTransaction;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,19 +8,17 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 
-import com.astuetz.PagerSlidingTabStrip;
 import com.example.aammu.mabaker.model.Recipe;
 import com.example.aammu.mabaker.model.Steps;
+import com.google.android.exoplayer2.Timeline;
 
-import java.nio.BufferUnderflowException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +30,8 @@ public class Fragment_Steps_Detail extends Fragment {
     private Adapter myAdapter;
     @BindView(R.id.viewpager) ViewPager viewPager;
     @BindView(R.id.tabs)
-    PagerSlidingTabStrip tabs;
-    private int position =0 ;
+    TabLayout tabs;
+    private int position=0 ;
     Fragment fragment;
     public Fragment_Steps_Detail() {
     }
@@ -65,7 +61,7 @@ public class Fragment_Steps_Detail extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         setViewPager(viewPager);
         myAdapter = new Adapter(getFragmentManager());
-        tabs.setViewPager(viewPager);
+        tabs.setupWithViewPager(viewPager,true);
         myAdapter.notifyDataSetChanged();
 
 
@@ -103,7 +99,7 @@ public class Fragment_Steps_Detail extends Fragment {
         @Override
         public CharSequence getPageTitle(int position) {
             int pos =steps.get(position).getStep_id();
-            String title = "Step :"+String.valueOf(pos);
+            String title = String.valueOf(pos);
             return title;
         }
         public void addFragment(Fragment fragment,String title){
